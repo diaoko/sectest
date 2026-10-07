@@ -1,0 +1,42 @@
+snowadmin@blue-shift-team-05:~$ sudo bash <<'SH'
+> set -eu
+> task_backup="/root/exam-backup-$(date +%Y%m%d-%H%M%S)"
+> install -d -m 700 "$task_backup"
+> cp -a /opt/docker-apps "$task_backup/"
+> cp -a /opt/scripts "$task_backup/"
+> cp -a /etc/ssh "$task_backup/"
+> printf 'Backup saved at: %s\n' "$task_backup"
+> SH
+Backup saved at: /root/exam-backup-20261007-120650
+snowadmin@blue-shift-team-05:~$ sudo cat /opt/scripts/export_ordini.sh
+s/warehouse-api/app.py
+sudo cat /opt/docker-apps/allyoucansnow/app/cercasudo cat /opt/docker-apps/warehouse-api/app.py
+sudo cat /opt/docker-apps/allyoucansnow/app/cerca#!/bin/bash
+# Export ordini giornaliero per la contabilita'
+DEST="/var/backups/ordini-$(date +%F).csv"
+mkdir -p /var/backups
+docker exec snowshop-db mysql -uroot -p'R00tSn0wDB!2024' -N -B \
+    -e "SELECT id, utente_id, coupon_codice, totale, creato_il FROM snowshop.ordini;" \
+    > "$DEST" 2>/dev/null
+echo "Export completato: $DEST"
+snowadmin@blue-shift-team-05:~$ .php
+r-apps/allyoucansnow/app/scheda.php
+sudo cat /opt/docker-apps/allyoucansnow/rebuild.sh
+sudo docker inspect allyoucansnow --format '{{json .Mo-bash: .php: command not found
+unts}}'snowadmin@blue-shift-team-05:~$ sudo cat /opt/docker-apps/allyoucansnow/app/scheda.php
+sudo cat /opt/docker-apps/allyoucansnow/rebuild.sh
+sudo docker inspect allyoucansnow --format '{{json .Mounts}}'<?php
+require_once __DIR__ . '/inc/layout.php';
+ays_header('Scheda tecnica');
+
+echo "<div class='section-head'><p class='eyebrow'>Documentazione</p><h2>Scheda tecnica</h2></div>";
+echo "<div class='panel'>";
+
+// Le schede tecniche sono documenti statici nella cartella /schede.
+doc = isset(_GET['doc']) ? basename($_GET['doc']) : 'pupazzo-classico.html';
+include('/var/www/allyoucansnow/schede/' . $doc);
+
+echo "</div>";
+echo "<p style='margin-top:1rem'><a class='btn ghost' href='/catalogo.php'>Torna al catalogo</a></p>";
+
+ays_footer();
