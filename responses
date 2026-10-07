@@ -1,0 +1,61 @@
+whoami
+id
+sudo -l
+pwd
+ls -la
+sudo docker ps
+sudo ss -tlnp
+after this i got this
+
+
+PS C:\Users\Dani> ssh snowadmin@192.168.14.25
+The authenticity of host '192.168.14.25 (192.168.14.25)' can't be established.
+ECDSA key fingerprint is SHA256:lJEfXBIwRyJzBzaMt3PatydFjXlZxZLLCVgt/AIoc3Y.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.14.25' (ECDSA) to the list of known hosts.
+snowadmin@192.168.14.25's password:
+Permission denied, please try again.
+snowadmin@192.168.14.25's password:
+Permission denied, please try again.
+snowadmin@192.168.14.25's password:
+Connection closed by 192.168.14.25 port 22
+PS C:\Users\Dani> ssh snowadmin@192.168.14.25
+snowadmin@192.168.14.25's password:
+Linux blue-shift-team-05 6.8.12-9-pve #1 SMP PREEMPT_DYNAMIC PMX 6.8.12-9 (2025-03-16T19:18Z) x86_64
+AllYouCanSnow - server di produzione e-shop.
+Nessuna documentazione disponibile. Contatto precedente non raggiungibile.
+Last login: Wed Oct  7 10:23:08 2026 from 192.168.14.2
+snowadmin@blue-shift-team-05:~$ whoami
+snowadmin
+snowadmin@blue-shift-team-05:~$ id
+uid=1001(snowadmin) gid=1004(snowadmin) groups=1004(snowadmin),27(sudo)
+snowadmin@blue-shift-team-05:~$ sudo -l
+Matching Defaults entries for snowadmin on blue-shift-team-05:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, use_pty
+
+User snowadmin may run the following commands on blue-shift-team-05:
+    (ALL : ALL) ALL
+    (ALL) NOPASSWD: ALL
+snowadmin@blue-shift-team-05:~$ pwd
+/home/snowadmin
+snowadmin@blue-shift-team-05:~$ ls -la
+total 24
+drwxr-xr-x 2 snowadmin snowadmin 4096 Oct  7 10:36 .
+drwxr-xr-x 6 root      root      4096 Oct  2 13:32 ..
+-rw-r--r-- 1 snowadmin snowadmin  220 Jun  6  2025 .bash_logout
+-rw-r--r-- 1 snowadmin snowadmin 3526 Jun  6  2025 .bashrc
+-rw-r--r-- 1 snowadmin snowadmin  807 Jun  6  2025 .profile
+-rw-r--r-- 1 snowadmin snowadmin    0 Oct  6 14:40 .sudo_as_admin_successful
+-rw-r--r-- 1 snowadmin snowadmin   41 Oct  7 10:36 error
+snowadmin@blue-shift-team-05:~$ sudo docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                              NAMES
+e0d786b334d4   allyoucansnow:latest   "/usr/local/bin/entr…"   33 minutes ago   Up 33 minutes   0.0.0.0:80->80/tcp                 allyoucansnow
+6eaf225c52e1   warehouse-api:latest   "python app.py"          4 days ago       Up 21 hours     80/tcp, 127.0.0.1:8080->8080/tcp   warehouse-api
+80c563875b4c   snowshop-db:latest     "docker-entrypoint.s…"   4 days ago       Up 21 hours     3306/tcp                           snowshop-db
+snowadmin@blue-shift-team-05:~$ sudo ss -tlnp
+State    Recv-Q    Send-Q       Local Address:Port       Peer Address:Port   Process
+LISTEN   0         4096               0.0.0.0:80              0.0.0.0:*       users:(("docker-proxy",pid=17226,fd=8))
+LISTEN   0         100              127.0.0.1:25              0.0.0.0:*       users:(("master",pid=331,fd=13))
+LISTEN   0         4096             127.0.0.1:8080            0.0.0.0:*       users:(("docker-proxy",pid=764,fd=8))
+LISTEN   0         100                  [::1]:25                 [::]:*       users:(("master",pid=331,fd=14))
+LISTEN   0         4096                     *:22                    *:*       users:(("sshd",pid=158,fd=3),("systemd",pid=1,fd=39))
