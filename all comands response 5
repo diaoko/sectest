@@ -1,0 +1,412 @@
+
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+snowadmin@blue-shift-team-05:~$ sudo docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                              NAMES
+e0d786b334d4   allyoucansnow:latest   "/usr/local/bin/entr…"   40 minutes ago   Up 40 minutes   0.0.0.0:80->80/tcp                 allyoucansnow
+6eaf225c52e1   warehouse-api:latest   "python app.py"          4 days ago       Up 21 hours     80/tcp, 127.0.0.1:8080->8080/tcp   warehouse-api
+80c563875b4c   snowshop-db:latest     "docker-entrypoint.s…"   4 days ago       Up 21 hours     3306/tcp                           snowshop-db
+snowadmin@blue-shift-team-05:~$ li ls
+-bash: li: command not found
+snowadmin@blue-shift-team-05:~$ get-help
+-bash: get-help: command not found
+snowadmin@blue-shift-team-05:~$ curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1/
+200
+snowadmin@blue-shift-team-05:~$ curl -sS http://127.0.0.1:8080/health
+{"status":"ok"}
+snowadmin@blue-shift-team-05:~$ sudo bash <<'SH'
+> set -eu
+> task_backup="/root/exam-backup-$(date +%Y%m%d-%H%M%S)"
+> install -d -m 700 "$task_backup"
+> cp -a /opt/docker-apps "$task_backup/"
+> cp -a /opt/scripts "$task_backup/"
+> cp -a /etc/ssh "$task_backup/"
+> printf 'Backup saved at: %s\n' "$task_backup"
+> SH
+Backup saved at: /root/exam-backup-20261007-120650
+snowadmin@blue-shift-team-05:~$ sudo cat /opt/scripts/export_ordini.sh
+s/warehouse-api/app.py
+sudo cat /opt/docker-apps/allyoucansnow/app/cercasudo cat /opt/docker-apps/warehouse-api/app.py
+sudo cat /opt/docker-apps/allyoucansnow/app/cerca#!/bin/bash
+# Export ordini giornaliero per la contabilita'
+DEST="/var/backups/ordini-$(date +%F).csv"
+mkdir -p /var/backups
+docker exec snowshop-db mysql -uroot -p'R00tSn0wDB!2024' -N -B \
+    -e "SELECT id, utente_id, coupon_codice, totale, creato_il FROM snowshop.ordini;" \
+    > "$DEST" 2>/dev/null
+echo "Export completato: $DEST"
+snowadmin@blue-shift-team-05:~$ .php
+r-apps/allyoucansnow/app/scheda.php
+sudo cat /opt/docker-apps/allyoucansnow/rebuild.sh
+sudo docker inspect allyoucansnow --format '{{json .Mo-bash: .php: command not found
+unts}}'snowadmin@blue-shift-team-05:~$ sudo cat /opt/docker-apps/allyoucansnow/app/scheda.php
+sudo cat /opt/docker-apps/allyoucansnow/rebuild.sh
+sudo docker inspect allyoucansnow --format '{{json .Mounts}}'<?php
+require_once __DIR__ . '/inc/layout.php';
+ays_header('Scheda tecnica');
+
+echo "<div class='section-head'><p class='eyebrow'>Documentazione</p><h2>Scheda tecnica</h2></div>";
+echo "<div class='panel'>";
+
+// Le schede tecniche sono documenti statici nella cartella /schede.
+doc = isset(_GET['doc']) ? basename($_GET['doc']) : 'pupazzo-classico.html';
+include('/var/www/allyoucansnow/schede/' . $doc);
+
+echo "</div>";
+echo "<p style='margin-top:1rem'><a class='btn ghost' href='/catalogo.php'>Torna al catalogo</a></p>";
+
+ays_footer();
+snowadmin@blue-shift-team-05:~$ ls -laR /var/www/html
+ls: cannot access '/var/www/html': No such file or directory
+snowadmin@blue-shift-team-05:~$ ls -laR
+.:
+total 28
+drwxr-xr-x 3 snowadmin snowadmin 4096 Oct  7 12:09 .
+drwxr-xr-x 6 root      root      4096 Oct  2 13:32 ..
+-rw-r--r-- 1 snowadmin snowadmin  220 Jun  6  2025 .bash_logout
+-rw-r--r-- 1 snowadmin snowadmin 3526 Jun  6  2025 .bashrc
+drwx------ 3 snowadmin snowadmin 4096 Oct  7 12:09 .config
+-rw-r--r-- 1 snowadmin snowadmin  807 Jun  6  2025 .profile
+-rw-r--r-- 1 snowadmin snowadmin    0 Oct  6 14:40 .sudo_as_admin_successful
+-rw-r--r-- 1 snowadmin snowadmin   41 Oct  7 10:36 error
+
+./.config:
+total 12
+drwx------ 3 snowadmin snowadmin 4096 Oct  7 12:09 .
+drwxr-xr-x 3 snowadmin snowadmin 4096 Oct  7 12:09 ..
+drwx------ 2 snowadmin snowadmin 4096 Oct  7 12:09 procps
+
+./.config/procps:
+total 8
+drwx------ 2 snowadmin snowadmin 4096 Oct  7 12:09 .
+drwx------ 3 snowadmin snowadmin 4096 Oct  7 12:09 ..
+snowadmin@blue-shift-team-05:~$ stat home
+stat: cannot statx 'home': No such file or directory
+snowadmin@blue-shift-team-05:~$ stat /home
+  File: /home
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 252,176 Inode: 131074      Links: 6
+Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2026-10-02 13:49:45.933275027 +0000
+Modify: 2026-10-02 13:32:16.375849390 +0000
+Change: 2026-10-02 13:49:46.050278754 +0000
+ Birth: 2026-10-02 13:49:45.933275027 +0000
+snowadmin@blue-shift-team-05:~$ stat /home/snowadmin/
+  File: /home/snowadmin/
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 252,176 Inode: 131078      Links: 3
+Access: (0755/drwxr-xr-x)  Uid: ( 1001/snowadmin)   Gid: ( 1004/snowadmin)
+Access: 2026-10-07 12:13:17.961787028 +0000
+Modify: 2026-10-07 12:09:11.823005900 +0000
+Change: 2026-10-07 12:09:11.823005900 +0000
+ Birth: 2026-10-02 13:49:45.968276142 +0000
+snowadmin@blue-shift-team-05:~$ stat /home/snowadmin/error
+  File: /home/snowadmin/error
+  Size: 41              Blocks: 8          IO Block: 4096   regular file
+Device: 252,176 Inode: 223867      Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1001/snowadmin)   Gid: ( 1004/snowadmin)
+Access: 2026-10-07 10:36:13.957456370 +0000
+Modify: 2026-10-07 10:36:13.957456370 +0000
+Change: 2026-10-07 10:36:13.957456370 +0000
+ Birth: 2026-10-07 10:36:13.957456370 +0000
+snowadmin@blue-shift-team-05:~$ file /home/snowadmin/error
+/home/snowadmin/error: ASCII text
+snowadmin@blue-shift-team-05:~$ sed -n '1,80l' /home/snowadmin/error
+<p class='err'>Errore query:  . - . </p>$
+snowadmin@blue-shift-team-05:~$ sudo docker inspect allyoucansnow --format 'Created={{.Created}} Image={{.Image}}'
+udo docker inspect allyoucansnow --format '{{json .Mounts}}'
+sudo docker logs --tail 60 allyoucansnowsudo docker inspect allyoucansnow --format '{{json .Mounts}}'
+sudo docker logs --tail 60 allyoucansnowCreated=2026-10-07T12:17:46.060270643Z Image=sha256:7154911099b9e52e64c1c5322f5066d44731a4a69f236de363b3c6b7383facb8
+snowadmin@blue-shift-team-05:~$ sudo docker inspect allyoucansnow --format 'Created={{.Created}} Image={{.Image}}'
+Created=2026-10-07T12:17:46.060270643Z Image=sha256:7154911099b9e52e64c1c5322f5066d44731a4a69f236de363b3c6b7383facb8
+snowadmin@blue-shift-team-05:~$ sudo docker inspect allyoucansnow --format '{{json .Mounts}}'
+[{"Type":"bind","Source":"/var/www/allyoucansnow","Destination":"/var/www/allyoucansnow","Mode":"","RW":true,"Propagation":"rprivate"},{"Type":"bind","Source":"/opt/docker-apps/allyoucansnow/conf/php.ini","Destination":"/etc/php/8.1/fpm/php.ini","Mode":"","RW":true,"Propagation":"rprivate"},{"Type":"bind","Source":"/opt/docker-apps/allyoucansnow/conf/nginx-site.conf","Destination":"/etc/nginx/sites-available/default","Mode":"","RW":true,"Propagation":"rprivate"}]
+snowadmin@blue-shift-team-05:~$ sudo docker logs --tail 60 allyoucansnow
+snowadmin@blue-shift-team-05:~$ curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1/
+200
+snowadmin@blue-shift-team-05:~$ curl -sS http://127.0.0.1:8080/health
+{"status":"ok"}
+snowadmin@blue-shift-team-05:~$ sudo docker exec allyoucansnow php -l /var/www/allyoucansnow/cerca.php
+No syntax errors detected in /var/www/allyoucansnow/cerca.php
+snowadmin@blue-shift-team-05:~$ sudo docker exec allyoucansnow php -l /var/www/allyoucansnow/scheda.php
+No syntax errors detected in /var/www/allyoucansnow/scheda.php
+snowadmin@blue-shift-team-05:~$ sudo docker exec allyoucansnow \
+> sed -n '1,160p' /var/www/allyoucansnow/cerca.php
+<?php
+require_once __DIR__ . '/inc/db.php';
+require_once __DIR__ . '/inc/layout.php';
+ays_header('Ricerca');
+
+$q = isset($_GET['q']) ? $_GET['q'] : '';
+?>
+<div class="section-head">
+  <p class="eyebrow">Ricerca</p>
+  <h2>Trova il tuo pupazzo</h2>
+  <p>Cerca per nome fra tutti i modelli disponibili in magazzino.</p>
+</div>
+
+<form method="get" class="searchbar">
+  <input name="q" value="<?php echo htmlspecialchars($q, ENT_QUOTES); ?>" placeholder="Es. pupazzo, deluxe, natalizio…" autocomplete="off" autofocus>
+  <button class="btn frost" type="submit">Cerca</button>
+</form>
+<?php
+
+if ($q !== '') {
+    // Ricerca per nome sul catalogo prodotti.
+    $sql = "SELECT id, nome, prezzo, descrizione FROM prodotti WHERE nome LIKE '%" . $q . "%'";
+    $db = ays_db();
+    $res = $db->query($sql);
+
+    if (!$res) {
+        echo "<p class='err'>Errore query: " . $db->error . "</p>";
+    } elseif ($res->num_rows > 0) {
+        echo "<ul class='grid'>";
+        while ($row = $res->fetch_assoc()) {
+            $img = ays_img($row['id']);
+            echo "<li class='card'>";
+            echo "  <div class='card-art'><img src='" . $img . "' alt=''></div>";
+            echo "  <div class='card-body'><h3>" . htmlspecialchars($row['nome']) . "</h3>";
+            echo "  <p>" . htmlspecialchars($row['descrizione']) . "</p>";
+            echo "  <div class='card-foot'><span class='price'>EUR " . htmlspecialchars($row['prezzo']) . "</span>";
+            echo "  <a class='btn sm ghost' href='/prodotto.php?id=" . (int)$row['id'] . "'>Dettagli</a>";
+            echo "  </div></div></li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>Nessun risultato per: " . $q . "</p>";
+    }
+}
+
+ays_footer();
+snowadmin@blue-shift-team-05:~$ sudo docker exec allyoucansnow \
+> sed -n '1,120p' /var/www/allyoucansnow/scheda.php
+<?php
+require_once __DIR__ . '/inc/layout.php';
+ays_header('Scheda tecnica');
+
+echo "<div class='section-head'><p class='eyebrow'>Documentazione</p><h2>Scheda tecnica</h2></div>";
+echo "<div class='panel'>";
+
+// Le schede tecniche sono documenti statici nella cartella /schede.
+$doc = isset($_GET['doc']) ? $_GET['doc'] : 'pupazzo-classico.html';
+include('/var/www/allyoucansnow/schede/' . $doc);
+
+echo "</div>";
+echo "<p style='margin-top:1rem'><a class='btn ghost' href='/catalogo.php'>Torna al catalogo</a></p>";
+
+ays_footer();
+snowadmin@blue-shift-team-05:~$ who
+snowadmin pts/3        Oct  7 10:23 (192.168.14.2)
+root     pts/4        Oct  7 11:24 (192.168.14.7)
+snowadmin pts/5        Oct  7 11:36 (192.168.14.2)
+snowadmin pts/6        Oct  7 11:33 (192.168.14.2)
+snowadmin@blue-shift-team-05:~$ last -n 15
+root     pts/7        192.168.14.7     Wed Oct  7 12:26   still logged in
+root     pts/7        192.168.14.7     Wed Oct  7 12:18 - 12:22  (00:03)
+snowadmi pts/5        192.168.14.2     Wed Oct  7 11:36   still logged in
+snowadmi pts/6        192.168.14.2     Wed Oct  7 11:33   still logged in
+root     pts/4        192.168.14.7     Wed Oct  7 11:24   still logged in
+root     pts/5        192.168.14.7     Wed Oct  7 10:58 - 11:23  (00:24)
+snowadmi pts/3        192.168.14.2     Wed Oct  7 10:23   still logged in
+snowadmi pts/3        192.168.14.2     Wed Oct  7 10:19 - 10:22  (00:03)
+reboot   system boot  6.8.12-9-pve     Tue Oct  6 14:37   still running
+reboot   system boot  6.8.12-9-pve     Fri Oct  2 13:51   still running
+root     pts/3        192.168.14.7     Fri Oct  2 13:38 - 13:38  (00:00)
+root     pts/3        192.168.14.7     Fri Oct  2 13:38 - 13:38  (00:00)
+root     pts/3        192.168.14.7     Fri Oct  2 13:38 - 13:38  (00:00)
+root     pts/3        192.168.14.7     Fri Oct  2 13:38 - 13:38  (00:00)
+root     pts/3        192.168.14.7     Fri Oct  2 13:38 - 13:38  (00:00)
+
+wtmp begins Wed Mar 18 10:41:04 2026
+snowadmin@blue-shift-team-05:~$ sudo journalctl -u ssh -u sshd --since "1 hour ago" --no-pager
+Oct 07 11:26:42 blue-shift-team-05 sshd[18015]: Failed password for snowadmin from 192.168.14.2 port 21206 ssh2
+Oct 07 11:28:18 blue-shift-team-05 sshd[18023]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:28:18 blue-shift-team-05 sshd[18023]: Connection closed by 192.168.14.8 port 46570
+Oct 07 11:28:19 blue-shift-team-05 sshd[18024]: Accepted password for snowadmin from 192.168.14.8 port 46584 ssh2
+Oct 07 11:28:19 blue-shift-team-05 sshd[18024]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:28:19 blue-shift-team-05 sshd[18024]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:30:18 blue-shift-team-05 sshd[18294]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:30:18 blue-shift-team-05 sshd[18294]: Connection closed by 192.168.14.8 port 41782
+Oct 07 11:30:19 blue-shift-team-05 sshd[18295]: Accepted password for snowadmin from 192.168.14.8 port 41784 ssh2
+Oct 07 11:30:19 blue-shift-team-05 sshd[18295]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:30:19 blue-shift-team-05 sshd[18295]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:31:26 blue-shift-team-05 sshd[18536]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:31:29 blue-shift-team-05 sshd[18536]: Failed password for snowadmin from 192.168.14.2 port 3083 ssh2
+Oct 07 11:31:35 blue-shift-team-05 sshd[18536]: Failed password for snowadmin from 192.168.14.2 port 3083 ssh2
+Oct 07 11:32:02 blue-shift-team-05 sshd[18536]: Connection reset by authenticating user snowadmin 192.168.14.2 port 3083 [preauth]
+Oct 07 11:32:02 blue-shift-team-05 sshd[18536]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:32:12 blue-shift-team-05 sshd[18534]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:32:14 blue-shift-team-05 sshd[18534]: Failed password for snowadmin from 192.168.14.2 port 3699 ssh2
+Oct 07 11:32:18 blue-shift-team-05 sshd[18540]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:32:18 blue-shift-team-05 sshd[18540]: Connection closed by 192.168.14.8 port 35532
+Oct 07 11:32:19 blue-shift-team-05 sshd[18538]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=deploy
+Oct 07 11:32:21 blue-shift-team-05 sshd[18541]: Accepted password for snowadmin from 192.168.14.8 port 35536 ssh2
+Oct 07 11:32:21 blue-shift-team-05 sshd[18541]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:32:21 blue-shift-team-05 sshd[18541]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:32:21 blue-shift-team-05 sshd[18538]: Failed password for deploy from 192.168.14.2 port 53924 ssh2
+Oct 07 11:33:11 blue-shift-team-05 sshd[18538]: Failed password for deploy from 192.168.14.2 port 53924 ssh2
+Oct 07 11:33:16 blue-shift-team-05 sshd[18538]: Connection reset by authenticating user deploy 192.168.14.2 port 53924 [preauth]
+Oct 07 11:33:16 blue-shift-team-05 sshd[18538]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=deploy
+Oct 07 11:33:31 blue-shift-team-05 sshd[18783]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=warehouse
+Oct 07 11:33:33 blue-shift-team-05 sshd[18783]: Failed password for warehouse from 192.168.14.2 port 31600 ssh2
+Oct 07 11:33:34 blue-shift-team-05 sshd[18785]: Accepted password for snowadmin from 192.168.14.2 port 3728 ssh2
+Oct 07 11:33:34 blue-shift-team-05 sshd[18785]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:33:34 blue-shift-team-05 sshd[18785]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:34:18 blue-shift-team-05 sshd[18795]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:34:18 blue-shift-team-05 sshd[18795]: Connection closed by 192.168.14.8 port 45196
+Oct 07 11:34:19 blue-shift-team-05 sshd[18796]: Accepted password for snowadmin from 192.168.14.8 port 45198 ssh2
+Oct 07 11:34:19 blue-shift-team-05 sshd[18796]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:34:19 blue-shift-team-05 sshd[18796]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:35:18 blue-shift-team-05 sshd[18783]: Connection reset by authenticating user warehouse 192.168.14.2 port 31600 [preauth]
+Oct 07 11:35:22 blue-shift-team-05 sshd[19067]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:35:24 blue-shift-team-05 sshd[19067]: Failed password for snowadmin from 192.168.14.2 port 31672 ssh2
+Oct 07 11:35:55 blue-shift-team-05 sshd[19067]: Failed password for snowadmin from 192.168.14.2 port 31672 ssh2
+Oct 07 11:35:58 blue-shift-team-05 sshd[19067]: Connection reset by authenticating user snowadmin 192.168.14.2 port 31672 [preauth]
+Oct 07 11:35:58 blue-shift-team-05 sshd[19067]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:36:05 blue-shift-team-05 sshd[19069]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=192.168.14.2  user=snowadmin
+Oct 07 11:36:07 blue-shift-team-05 sshd[19069]: Failed password for snowadmin from 192.168.14.2 port 31704 ssh2
+Oct 07 11:36:13 blue-shift-team-05 sshd[19069]: Accepted password for snowadmin from 192.168.14.2 port 31704 ssh2
+Oct 07 11:36:13 blue-shift-team-05 sshd[19069]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:36:13 blue-shift-team-05 sshd[19069]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:36:18 blue-shift-team-05 sshd[19079]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:36:18 blue-shift-team-05 sshd[19079]: Connection closed by 192.168.14.8 port 39984
+Oct 07 11:36:19 blue-shift-team-05 sshd[19080]: Accepted password for snowadmin from 192.168.14.8 port 40000 ssh2
+Oct 07 11:36:19 blue-shift-team-05 sshd[19080]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:36:19 blue-shift-team-05 sshd[19080]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:38:18 blue-shift-team-05 sshd[19318]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:38:18 blue-shift-team-05 sshd[19318]: Connection closed by 192.168.14.8 port 37890
+Oct 07 11:38:19 blue-shift-team-05 sshd[19319]: Accepted password for snowadmin from 192.168.14.8 port 37902 ssh2
+Oct 07 11:38:19 blue-shift-team-05 sshd[19319]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:38:19 blue-shift-team-05 sshd[19319]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:40:18 blue-shift-team-05 sshd[19591]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:40:18 blue-shift-team-05 sshd[19591]: Connection closed by 192.168.14.8 port 45294
+Oct 07 11:40:19 blue-shift-team-05 sshd[19592]: Accepted password for snowadmin from 192.168.14.8 port 45298 ssh2
+Oct 07 11:40:19 blue-shift-team-05 sshd[19592]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:40:19 blue-shift-team-05 sshd[19592]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:42:18 blue-shift-team-05 sshd[19828]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:42:18 blue-shift-team-05 sshd[19828]: Connection closed by 192.168.14.8 port 40676
+Oct 07 11:42:19 blue-shift-team-05 sshd[19829]: Accepted password for snowadmin from 192.168.14.8 port 40684 ssh2
+Oct 07 11:42:19 blue-shift-team-05 sshd[19829]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:42:19 blue-shift-team-05 sshd[19829]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:44:18 blue-shift-team-05 sshd[20064]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:44:18 blue-shift-team-05 sshd[20064]: Connection closed by 192.168.14.8 port 40438
+Oct 07 11:44:21 blue-shift-team-05 sshd[20065]: Accepted password for snowadmin from 192.168.14.8 port 40450 ssh2
+Oct 07 11:44:21 blue-shift-team-05 sshd[20065]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:44:21 blue-shift-team-05 sshd[20065]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:46:18 blue-shift-team-05 sshd[20306]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:46:18 blue-shift-team-05 sshd[20306]: Connection closed by 192.168.14.8 port 39672
+Oct 07 11:46:19 blue-shift-team-05 sshd[20307]: Accepted password for snowadmin from 192.168.14.8 port 39676 ssh2
+Oct 07 11:46:19 blue-shift-team-05 sshd[20307]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:46:19 blue-shift-team-05 sshd[20307]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:48:18 blue-shift-team-05 sshd[20544]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:48:18 blue-shift-team-05 sshd[20544]: Connection closed by 192.168.14.8 port 38304
+Oct 07 11:48:19 blue-shift-team-05 sshd[20545]: Accepted password for snowadmin from 192.168.14.8 port 38314 ssh2
+Oct 07 11:48:19 blue-shift-team-05 sshd[20545]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:48:19 blue-shift-team-05 sshd[20545]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:50:18 blue-shift-team-05 sshd[20816]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:50:18 blue-shift-team-05 sshd[20816]: Connection closed by 192.168.14.8 port 57774
+Oct 07 11:50:19 blue-shift-team-05 sshd[20817]: Accepted password for snowadmin from 192.168.14.8 port 57790 ssh2
+Oct 07 11:50:19 blue-shift-team-05 sshd[20817]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:50:19 blue-shift-team-05 sshd[20817]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:52:18 blue-shift-team-05 sshd[21050]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:52:18 blue-shift-team-05 sshd[21050]: Connection closed by 192.168.14.8 port 33804
+Oct 07 11:52:19 blue-shift-team-05 sshd[21051]: Accepted password for snowadmin from 192.168.14.8 port 33816 ssh2
+Oct 07 11:52:19 blue-shift-team-05 sshd[21051]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:52:19 blue-shift-team-05 sshd[21051]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:54:18 blue-shift-team-05 sshd[21287]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:54:18 blue-shift-team-05 sshd[21287]: Connection closed by 192.168.14.8 port 55474
+Oct 07 11:54:19 blue-shift-team-05 sshd[21288]: Accepted password for snowadmin from 192.168.14.8 port 55482 ssh2
+Oct 07 11:54:19 blue-shift-team-05 sshd[21288]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:54:19 blue-shift-team-05 sshd[21288]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:56:18 blue-shift-team-05 sshd[21539]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:56:18 blue-shift-team-05 sshd[21539]: Connection closed by 192.168.14.8 port 50016
+Oct 07 11:56:19 blue-shift-team-05 sshd[21540]: Accepted password for snowadmin from 192.168.14.8 port 50022 ssh2
+Oct 07 11:56:19 blue-shift-team-05 sshd[21540]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:56:19 blue-shift-team-05 sshd[21540]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 11:58:18 blue-shift-team-05 sshd[21791]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 11:58:18 blue-shift-team-05 sshd[21791]: Connection closed by 192.168.14.8 port 37486
+Oct 07 11:58:19 blue-shift-team-05 sshd[21792]: Accepted password for snowadmin from 192.168.14.8 port 37498 ssh2
+Oct 07 11:58:19 blue-shift-team-05 sshd[21792]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 11:58:19 blue-shift-team-05 sshd[21792]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:00:18 blue-shift-team-05 sshd[22102]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:00:18 blue-shift-team-05 sshd[22102]: Connection closed by 192.168.14.8 port 56752
+Oct 07 12:00:19 blue-shift-team-05 sshd[22103]: Accepted password for snowadmin from 192.168.14.8 port 56762 ssh2
+Oct 07 12:00:19 blue-shift-team-05 sshd[22103]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:00:19 blue-shift-team-05 sshd[22103]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:02:18 blue-shift-team-05 sshd[22366]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:02:18 blue-shift-team-05 sshd[22366]: Connection closed by 192.168.14.8 port 44952
+Oct 07 12:02:19 blue-shift-team-05 sshd[22367]: Accepted password for snowadmin from 192.168.14.8 port 44956 ssh2
+Oct 07 12:02:19 blue-shift-team-05 sshd[22367]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:02:19 blue-shift-team-05 sshd[22367]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:04:18 blue-shift-team-05 sshd[22627]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:04:18 blue-shift-team-05 sshd[22627]: Connection closed by 192.168.14.8 port 56738
+Oct 07 12:04:19 blue-shift-team-05 sshd[22628]: Accepted password for snowadmin from 192.168.14.8 port 56746 ssh2
+Oct 07 12:04:19 blue-shift-team-05 sshd[22628]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:04:19 blue-shift-team-05 sshd[22628]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:06:18 blue-shift-team-05 sshd[23120]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:06:18 blue-shift-team-05 sshd[23120]: Connection closed by 192.168.14.8 port 55450
+Oct 07 12:06:19 blue-shift-team-05 sshd[23121]: Accepted password for snowadmin from 192.168.14.8 port 55460 ssh2
+Oct 07 12:06:19 blue-shift-team-05 sshd[23121]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:06:19 blue-shift-team-05 sshd[23121]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:08:18 blue-shift-team-05 sshd[23371]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:08:18 blue-shift-team-05 sshd[23371]: Connection closed by 192.168.14.8 port 56382
+Oct 07 12:08:19 blue-shift-team-05 sshd[23372]: Accepted password for snowadmin from 192.168.14.8 port 56392 ssh2
+Oct 07 12:08:19 blue-shift-team-05 sshd[23372]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:08:19 blue-shift-team-05 sshd[23372]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:10:18 blue-shift-team-05 sshd[23651]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:10:18 blue-shift-team-05 sshd[23651]: Connection closed by 192.168.14.8 port 44624
+Oct 07 12:10:19 blue-shift-team-05 sshd[23652]: Accepted password for snowadmin from 192.168.14.8 port 44628 ssh2
+Oct 07 12:10:19 blue-shift-team-05 sshd[23652]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:10:19 blue-shift-team-05 sshd[23652]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:12:18 blue-shift-team-05 sshd[23890]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:12:18 blue-shift-team-05 sshd[23890]: Connection closed by 192.168.14.8 port 58554
+Oct 07 12:12:21 blue-shift-team-05 sshd[23891]: Accepted password for snowadmin from 192.168.14.8 port 58566 ssh2
+Oct 07 12:12:21 blue-shift-team-05 sshd[23891]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:12:21 blue-shift-team-05 sshd[23891]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:14:18 blue-shift-team-05 sshd[24130]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:14:18 blue-shift-team-05 sshd[24130]: Connection closed by 192.168.14.8 port 48838
+Oct 07 12:14:19 blue-shift-team-05 sshd[24131]: Accepted password for snowadmin from 192.168.14.8 port 48844 ssh2
+Oct 07 12:14:19 blue-shift-team-05 sshd[24131]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:14:19 blue-shift-team-05 sshd[24131]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:16:18 blue-shift-team-05 sshd[24407]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:16:18 blue-shift-team-05 sshd[24407]: Connection closed by 192.168.14.8 port 37250
+Oct 07 12:16:19 blue-shift-team-05 sshd[24408]: Accepted password for snowadmin from 192.168.14.8 port 37266 ssh2
+Oct 07 12:16:19 blue-shift-team-05 sshd[24408]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:16:19 blue-shift-team-05 sshd[24408]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:18:14 blue-shift-team-05 sshd[25105]: Postponed publickey for root from 192.168.14.7 port 36786 ssh2 [preauth]
+Oct 07 12:18:14 blue-shift-team-05 sshd[25105]: Accepted publickey for root from 192.168.14.7 port 36786 ssh2: ED25519 SHA256:lu2h7sU+fyougqRekqYOoUZKPZVRHJ0xU2Puu3gQFG0
+Oct 07 12:18:14 blue-shift-team-05 sshd[25105]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Oct 07 12:18:14 blue-shift-team-05 sshd[25105]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:18:18 blue-shift-team-05 sshd[25117]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:18:18 blue-shift-team-05 sshd[25117]: Connection closed by 192.168.14.8 port 39824
+Oct 07 12:18:19 blue-shift-team-05 sshd[25118]: Accepted password for snowadmin from 192.168.14.8 port 39838 ssh2
+Oct 07 12:18:19 blue-shift-team-05 sshd[25118]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:18:19 blue-shift-team-05 sshd[25118]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:20:18 blue-shift-team-05 sshd[25550]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:20:18 blue-shift-team-05 sshd[25550]: Connection closed by 192.168.14.8 port 45708
+Oct 07 12:20:19 blue-shift-team-05 sshd[25551]: Accepted password for snowadmin from 192.168.14.8 port 45716 ssh2
+Oct 07 12:20:19 blue-shift-team-05 sshd[25551]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:20:19 blue-shift-team-05 sshd[25551]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:22:18 blue-shift-team-05 sshd[25983]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:22:18 blue-shift-team-05 sshd[25983]: Connection closed by 192.168.14.8 port 55496
+Oct 07 12:22:19 blue-shift-team-05 sshd[25984]: Accepted password for snowadmin from 192.168.14.8 port 55506 ssh2
+Oct 07 12:22:19 blue-shift-team-05 sshd[25984]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:22:19 blue-shift-team-05 sshd[25984]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:24:18 blue-shift-team-05 sshd[26484]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:24:18 blue-shift-team-05 sshd[26484]: Connection closed by 192.168.14.8 port 56892
+Oct 07 12:24:19 blue-shift-team-05 sshd[26485]: Accepted password for snowadmin from 192.168.14.8 port 56904 ssh2
+Oct 07 12:24:19 blue-shift-team-05 sshd[26485]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:24:19 blue-shift-team-05 sshd[26485]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:26:18 blue-shift-team-05 sshd[26951]: error: kex_exchange_identification: Connection closed by remote host
+Oct 07 12:26:18 blue-shift-team-05 sshd[26951]: Connection closed by 192.168.14.8 port 46188
+Oct 07 12:26:19 blue-shift-team-05 sshd[26952]: Accepted password for snowadmin from 192.168.14.8 port 46196 ssh2
+Oct 07 12:26:19 blue-shift-team-05 sshd[26952]: pam_unix(sshd:session): session opened for user snowadmin(uid=1001) by (uid=0)
+Oct 07 12:26:19 blue-shift-team-05 sshd[26952]: pam_env(sshd:session): deprecated reading of user environment enabled
+Oct 07 12:26:21 blue-shift-team-05 sshd[27212]: Postponed publickey for root from 192.168.14.7 port 50132 ssh2 [preauth]
+Oct 07 12:26:21 blue-shift-team-05 sshd[27212]: Accepted publickey for root from 192.168.14.7 port 50132 ssh2: ED25519 SHA256:lu2h7sU+fyougqRekqYOoUZKPZVRHJ0xU2Puu3gQFG0
+Oct 07 12:26:21 blue-shift-team-05 sshd[27212]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Oct 07 12:26:21 blue-shift-team-05 sshd[27212]: pam_env(sshd:session): deprecated reading of user environment enabled
+snowadmin@blue-shift-team-05:~$ sudo grep -RnsE 'snowadmin|NOPASSWD' /etc/sudoers /etc/sudoers.d
+/etc/sudoers.d/snowadmin:1:snowadmin ALL=(ALL) NOPASSWD: ALL
+/etc/sudoers.d/deploy:1:deploy ALL=(root) NOPASSWD: /usr/bin/vi /etc/nginx/*
+/etc/sudoers.d/warehouse:1:warehouse ALL=(root) NOPASSWD: /usr/bin/python3 /opt/warehouse/sync_stock.py
+snowadmin@blue-shift-team-05:~$
