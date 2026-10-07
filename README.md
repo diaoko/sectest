@@ -24,3 +24,9 @@ ssh snowadmin@192.168.14.25
 رمز عبور (Password): bxky9vYRAnfhc2da
 به دوستت بگو دستور ورود به ترمینال (SSH) را بزند و بگوید موفق به ورود شد یا نه.
 
+
+
+
+
+u could access to the team charlie dashboard
+
